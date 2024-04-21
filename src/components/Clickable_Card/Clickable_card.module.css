@@ -1,0 +1,16 @@
+.name {
+    display: flex;
+    color: white;
+    font-size: 20px;
+    font-family: "Beaufort for LOL", serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    background-color: rgb(6, 28, 37);
+    text-transform: uppercase;
+    font-style: italic;
+    padding: 20px;
+}
+
+.image {
+    display: block;
+}
