@@ -1,11 +1,19 @@
 .logo {
     width: 100%;
     display: block;
-    position: absolute;
+    position: fixed;
+    z-index: 0;
+}
+
+.fill {
+    visibility: hidden;
+    display: block;
+    width: 100%;
 }
 
 .navbar {
     position: sticky;
+    z-index: 1;
 }
 
 .cards {
@@ -30,6 +38,8 @@
 .champions {
     display: flex;
     flex-direction: row;
+    z-index: 1;
+    position: relative;
 }
 
 .search {
@@ -37,6 +47,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 
 .cards::-webkit-scrollbar {

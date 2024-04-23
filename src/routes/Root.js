@@ -11,8 +11,7 @@ import { useState, useEffect } from 'react';
 export default function Root() {
 
     const [champions, setChampions] = useState([]);
-    const [filteredChampions, setFilteredChampions] = useState([]);
-    const [search, setSearch] = useState("");
+    const [searchedChampions, setSearchedChampions] = useState([]);
 
     // champion ability url https://d28xe8vt774jo5.cloudfront.net/champion-abilities/0${key}/ability_0${key}_R1.webm
     useEffect(() => {
@@ -44,32 +43,31 @@ export default function Root() {
                                     });
                                     champions.map(champion => {
                                         champion.price = data[Object.keys(data).find(key => key === champion.id)].price
+                                        champion.releaseDate = data[Object.keys(data).find(key => key === champion.id)].releaseDate
+                                        champion.roles = data[Object.keys(data).find(key => key === champion.id)].roles
+                                        champion.positions = data[Object.keys(data).find(key => key === champion.id)].positions
+                                        champion.difficulty = data[Object.keys(data).find(key => key === champion.id)].attributeRatings.difficulty
                                         return champion
                                     });
                                 })
                                 setChampions(champions);
+                                setSearchedChampions(champions);
                             })
                     })
             })    
     }, []);
 
-    const [booleans, setBooleans] = useState([true, false, false])
-
-    useEffect( () => {
-        setFilteredChampions(champions.filter(champion => champion.name.toLowerCase().includes(search.toLowerCase())));
-    }, [booleans, search, champions])
-
-
     return (
         <div class = {styles.wrapper}>
             <img alt = "lol_banner" src = {league_banner} class = {styles.logo}/>
-            <Navbar prpbuttons = {[{name : "Home", link : "/"}, {name : "Champions", link : "/champion"}, {name : "Skins", link : "/skins"}, {name : "Download", link : "#Download"}]} class = {styles.navbar}/>
-            <div class = {styles.champions}>
+            <img alt = "lol_banner" src = {league_banner} class = {styles.fill}/>
+            <Navbar prpbuttons = {[{name : "Home", link : "/"}, {name : "Champions", link : "/champion"}, {name : "Skins", link : "/skins"}, {name : "Download", link : "#Download"}]} className = {styles.navbar}/>
+            <div className = {styles.champions}>
                 <div class = {styles.search}>
-                    <Search booleans = {booleans} setBooleans = {setBooleans} search = {search} setSearch = {setSearch}/>
+                    <Search setSearchedChampions = {setSearchedChampions} champions = {champions} filters = {[{name: "Assains", path: "tags"}, {name: "Tank", path: "tags"}]} sorters = {[{name: "Price: ", path: "price.blueEssence"}]}/>
                 </div>
                 <div class = {styles.cards}>
-                    {filteredChampions.map((champion, i) =>
+                    {searchedChampions.map((champion, i) =>
                         <Clickable_Card key = {i} prpchamp={champion} prpref={0}/>
                     )}
                 </div>

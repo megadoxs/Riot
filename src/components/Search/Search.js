@@ -1,25 +1,77 @@
+import { useState, useEffect } from 'react';
 import styles from './Search.module.css';
 
-export default function Search({booleans, setBooleans, search, setSearch}){
+export default function Search({setSearchedChampions, champions, filters, sorters}){
 
-    function check(index){
-        setBooleans(booleans.map((element, i) => i === index ? true : false));
+    const [sortersBooleans, setSortersBooleans] = useState(Array.from({ length: sorters.length }, () => false));
+    const [filtersBooleans, setFiltersBooleans] = useState(Array.from({ length: filters.length }, () => false));
+    const [search, setSearch] = useState("");
+    const [sortedChampions, setSortedChampions] = useState([]);
+
+    function sorterscheck(index){
+        setSortersBooleans(sortersBooleans.map((element, i) => i === index ? true : false));
     }
+
+    function filterscheck(index){
+        setFiltersBooleans(filtersBooleans.map((element, i) => i === index ? true : false));
+    }
+
+    useEffect(() => {
+        setSortedChampions(champions);
+    }, [champions]);
+
+    console.log(champions)
+
+    useEffect( () => {
+        sorters.forEach((sorter, i) => {
+            if (sortersBooleans[i]) {
+                setSortedChampions(champions.sort((a, b) => {
+                    const pathParts = sorter.path.split('.');
+                    let aValue = a;
+                    let bValue = b;
+
+                    for (const part of pathParts) {
+                        aValue = aValue[part];
+                        bValue = bValue[part];
+                    }
+        
+                    return aValue - bValue;
+                }));
+            }
+        });
+        // not done xdd
+        /*filters.forEach((filter, i) => {
+            if (sortersBooleans[i]) {
+                setSortedChampions(champions.filter(champion => {
+                    const pathParts = filter.path.split('.');
+                    let aValue = a;
+                    let bValue = b;
+
+                    for (const part of pathParts) {
+                        aValue = aValue[part];
+                        bValue = bValue[part];
+                    }
+        
+                    return aValue - bValue;
+                }));
+            }
+        }); */
+        setSearchedChampions(sortedChampions.filter(champion => champion.name.toLowerCase().includes(search.toLowerCase()) || champion.id.toLowerCase().includes(search.toLowerCase())));
+    }, [sortersBooleans, search])
 
     return (
         <div class = {styles.wrapper}>
-            <input value = {search} onChange = {e => setSearch(e.target.value)} placeholder = "Search"></input>
+            <input class = {styles.input} value = {search} onChange = {e => setSearch(e.target.value)} placeholder = "Search"></input>
             <div>
-                <label for = "alphabetic">Alphabetic</label>
-                <input onChange = {() => check(0)} checked = {booleans[0]} name = "alphabetic" type = "checkbox" ></input>
+                {sorters.map( (sorter, i) => (
+                    <div key = {i}>
+                        <label for = {sorter.name} >{sorter.name}</label>
+                        <input onChange = {() => sorterscheck(i)} checked = {sortersBooleans[i]} name = {sorter.name} type = "checkbox"></input>
+                    </div>
+                ))}
             </div>
             <div>
-                <label for = "priceBE">Price (BE)</label>
-                <input onChange = {() => check(1)} checked = {booleans[1]} name = "priceBE" type = "checkbox" ></input>
-            </div>
-            <div>
-                <label for = "priceRP">Price (RP)</label>
-                <input onChange = {() => check(2)} checked = {booleans[2]} name = "priceRP" type = "checkbox" ></input>
+
             </div>
         </div>
     )
