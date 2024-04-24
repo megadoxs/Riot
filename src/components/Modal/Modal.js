@@ -2,30 +2,30 @@ import styles from './Modal.module.css';
 
 import { useState, useEffect } from 'react';
 
-export default function Clickable_Card({prptype, prpchamp, closeModal}){
+export default function Clickable_Card({prptype, prpchamp, isModalOpen, setIsModalOpen}){
 
     const [version, setVersion] = useState();
     const [ability, setAbility] = useState(0)
 
-    useState(() => {
+    useEffect(() => {
         fetch('https://ddragon.leagueoflegends.com/api/versions.json')
         .then(response => response.json())
         .then(versions => setVersion(versions[0]))
     }, [])
 
     return(
-        <div class = {styles.wrapper}>
-                <div class = {styles.content}>
-                    <span class = {styles.close} onClick={closeModal} >&times;</span>
+        <div className = {styles.wrapper} onClick={(e) => { if (e.target === e.currentTarget && isModalOpen) setIsModalOpen(false) }}>
+                <div className = {styles.content}>
+                    <span className = {styles.close} onClick={() => setIsModalOpen(false)} >&times;</span>
                     { prptype === "abilities" &&
-                        <div class = {styles.custom}>
+                        <div className = {styles.custom}>
                             <div>
-                                <div class = {styles.icons}>
-                                    <button onClick = {() => setAbility(0)} class = {styles.button}><img class = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/passive/${prpchamp.passive.image.full}`}/></button>
-                                    <button onClick = {() => setAbility(1)} class = {styles.button}><img class = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[0].image.full}`}/></button>
-                                    <button onClick = {() => setAbility(2)} class = {styles.button}><img class = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[1].image.full}`}/></button>
-                                    <button onClick = {() => setAbility(3)} class = {styles.button}><img class = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[2].image.full}`}/></button>
-                                    <button onClick = {() => setAbility(4)} class = {styles.button}><img class = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[3].image.full}`}/></button>
+                                <div className = {styles.icons}>
+                                    <button onClick = {() => setAbility(0)} className = {styles.button}><img className = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/passive/${prpchamp.passive.image.full}`}/></button>
+                                    <button onClick = {() => setAbility(1)} className = {styles.button}><img className = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[0].image.full}`}/></button>
+                                    <button onClick = {() => setAbility(2)} className = {styles.button}><img className = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[1].image.full}`}/></button>
+                                    <button onClick = {() => setAbility(3)} className = {styles.button}><img className = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[2].image.full}`}/></button>
+                                    <button onClick = {() => setAbility(4)} className = {styles.button}><img className = {styles.img} src = {`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${prpchamp.spells[3].image.full}`}/></button>
                                 </div>
                                 <div>
                                     {ability === 0 &&

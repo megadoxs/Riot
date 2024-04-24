@@ -10,7 +10,9 @@ import { useState, useEffect } from 'react';
 // page that will be loaded by the user on load
 export default function Root() {
 
+    const [page, setPage] = useState("Home");
     const [champions, setChampions] = useState([]);
+    const [championDisplayed, setChampionDisplayed] = useState(0);
     const [searchedChampions, setSearchedChampions] = useState([]);
 
     // champion ability url https://d28xe8vt774jo5.cloudfront.net/champion-abilities/0${key}/ability_0${key}_R1.webm
@@ -58,20 +60,53 @@ export default function Root() {
     }, []);
 
     return (
-        <div class = {styles.wrapper}>
-            <img alt = "lol_banner" src = {league_banner} class = {styles.logo}/>
-            <img alt = "lol_banner" src = {league_banner} class = {styles.fill}/>
+        <div className = {styles.wrapper}>
+            <img alt = "lol_banner" src = {league_banner} className = {styles.logo}/>
+            <img alt = "lol_banner" src = {league_banner} className = {styles.fill}/>
             <Navbar prpbuttons = {[{name : "Home", link : "/"}, {name : "Champions", link : "/champion"}, {name : "Skins", link : "/skins"}, {name : "Download", link : "#Download"}]} className = {styles.navbar}/>
-            <div className = {styles.champions}>
-                <div class = {styles.search}>
-                    <Search setSearchedChampions = {setSearchedChampions} champions = {champions} filters = {[{name: "Assains", path: "tags"}, {name: "Tank", path: "tags"}]} sorters = {[{name: "Price: ", path: "price.blueEssence"}]}/>
+            {page === "Home" &&
+                <div>
+                    <div>
+                        <h2>Champions</h2>
+                        <div>
+                            {/*should add +1 to the value every 10s or onClick*/}
+                            { champions.length > 0 &&
+                                <Clickable_Card prpchamp={champions[championDisplayed]} prpimg = {`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champions[championDisplayed].id}_0.jpg`} displayName = {false}/>
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Skins</h2>
+                        <div>
+                            
+                        </div>
+                    </div>
                 </div>
-                <div class = {styles.cards}>
-                    {searchedChampions.map((champion, i) =>
-                        <Clickable_Card key = {i} prpchamp={champion} prpref={0}/>
-                    )}
+            }
+            {page === "Champions" &&
+                <div className = {styles.champions}>
+                    <div className = {styles.search}>
+                        <Search setSearchedChampions = {setSearchedChampions} champions = {champions} filters = {[{name: "Roles", path: "roles", multiple: true, options: [{name: "Fighters", value: "FIGHTER"}, {name: "Juggernauts", value: "JUGGERNAUT"}, {name: "Tanks", value: "TANK"}, {name: "Assassins", value: "ASSASSIN"}, {name: "Bursts", value: "BURST"}, {name: "Mages", value: "MAGE"}, {name: "Marksmans", value: "MARKSMAN"}, {name : "Supports", value: "SUPPORT"}, {name: "Vanguards", value: "VANGUARD"}, {name: "Battle Mages", value: "BATTLEMAGE"}, {name: "Specialists", value: "SPECIALIST"}, {name : "Catchers", value: "CATCHER"}, {name : "Skirmishers", value: "SKIRMISHER"}, {name: "Wardens", value: "WARDEN"}, {name: "Divers", value: "DIVER"}, {name: "Artilleries", value: "ARTILLERY"}, {name : "Enchanters", value: "ENCHANTER"}]}, {name: "Position", path: "positions", multiple: false, options: [{name: "Tops", value: "TOP"}, {name: "Jungles", value: "JUNGLE"}, {name: "Middles", value: "MIDDLE"}, {name: "Bottoms", value: "BOTTOM"}, {name: "Supports", value: "SUPPORT"}]}, {name: "Difficulty", path: "difficulty", incompatible: 2, multiple: false, options: [{name: "Easy", value: 1}, {name: "Medium", value: 2}, {name: "Hard", value: 3}]}]} sorters = {[{name: "Price: ", path: "price.blueEssence"}, {name: "Release Date: ", path: "releaseDate"}, {name: "Difficulty: ", path: "difficulty", incompatible: 2}]}/>
+                    </div>
+                    <div className = {styles.cards}>
+                        {searchedChampions.map((champion, i) =>
+                            <Clickable_Card key = {i} prpchamp={champion} prpimg = {`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.id}_0.jpg`} displayName = {true}/>
+                        )}
+                    </div>
                 </div>
-            </div>
+            }
+            {page === "Skins" &&
+                <div className = {styles.champions}>
+                    <div className = {styles.search}>
+                        <Search setSearchedChampions = {setSearchedChampions} champions = {champions} filters = {[{name: "Roles", path: "roles", multiple: true, options: [{name: "Fighters", value: "FIGHTER"}, {name: "Juggernauts", value: "JUGGERNAUT"}, {name: "Tanks", value: "TANK"}, {name: "Assassins", value: "ASSASSIN"}, {name: "Bursts", value: "BURST"}, {name: "Mages", value: "MAGE"}, {name: "Marksmans", value: "MARKSMAN"}, {name : "Supports", value: "SUPPORT"}, {name: "Vanguards", value: "VANGUARD"}, {name: "Battle Mages", value: "BATTLEMAGE"}, {name: "Specialists", value: "SPECIALIST"}, {name : "Catchers", value: "CATCHER"}, {name : "Skirmishers", value: "SKIRMISHER"}, {name: "Wardens", value: "WARDEN"}, {name: "Divers", value: "DIVER"}, {name: "Artilleries", value: "ARTILLERY"}, {name : "Enchanters", value: "ENCHANTER"}]}, {name: "Position", path: "positions", multiple: false, options: [{name: "Tops", value: "TOP"}, {name: "Jungles", value: "JUNGLE"}, {name: "Middles", value: "MIDDLE"}, {name: "Bottoms", value: "BOTTOM"}, {name: "Supports", value: "SUPPORT"}]}, {name: "Difficulty", path: "difficulty", incompatible: 2, multiple: false, options: [{name: "Easy", value: 1}, {name: "Medium", value: 2}, {name: "Hard", value: 3}]}]} sorters = {[{name: "Price: ", path: "price.blueEssence"}, {name: "Release Date: ", path: "releaseDate"}, {name: "Difficulty: ", path: "difficulty", incompatible: 2}]}/>
+                    </div>
+                    <div className = {styles.cards}>
+                        {searchedChampions.map((champion, i) =>
+                            <Clickable_Card key = {i} prpchamp={champion} prpimg = {`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.id}_0.jpg`} displayName = {true}/>
+                        )}
+                    </div>
+                </div>
+            }
         </div>
     )
 }

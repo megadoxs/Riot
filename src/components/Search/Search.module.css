@@ -9,3 +9,16 @@
     height: 50px;
     font-size: 20px;
 }
+
+.dropDown {
+    display: flex;
+    gap: 10px;
+}
+
+.options {
+    margin-left: 5%;
+}
+
+.sort {
+    margin: 16px 0;
+}

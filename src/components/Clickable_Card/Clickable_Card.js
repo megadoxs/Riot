@@ -4,27 +4,19 @@ import Modal from '../Modal/Modal.js'
 
 import { useState, useEffect } from 'react';
 
-export default function Clickable_Card({prpchamp, prpref}){
+export default function Clickable_Card({prpchamp, prpimg, displayName}){
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    function closeModal(){
-        console.log("save me!!!!");
-        setIsModalOpen(false);
-        console.log(isModalOpen)
-    }
-
-    useEffect( () => {
-        console.log("hello World");
-    }, [isModalOpen])
-
-    // might make it a div and not a <a>
+    // maybe use a div so that <a> doesn't give me a warning
     return(
-        <a onClick = {() => setIsModalOpen(true)}>
-            <img class = {styles.image} src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${prpchamp.id}_${prpref}.jpg`} alt={prpchamp.id} />
-            <div class = {styles.name}>{prpchamp.name}</div>
+        <a onClick = {() => { if (!isModalOpen) setIsModalOpen(true); }}>
+            <img className = {styles.image} src={prpimg} alt={prpchamp.id} />
+            { displayName &&
+                <div className = {styles.name}>{prpchamp.name}</div>
+            }
             { isModalOpen &&
-                <Modal prptype = "abilities" prpchamp = {prpchamp} closeModal={closeModal}/>
+                <Modal prptype = "abilities" prpchamp = {prpchamp} isModalOpen = {isModalOpen} setIsModalOpen = {setIsModalOpen}/>
             }
         </a>
     )
