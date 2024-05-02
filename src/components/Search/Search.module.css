@@ -17,6 +17,8 @@
 
 .options {
     margin-left: 5%;
+    overflow-y: auto;
+    height: -webkit-fill-available;
 }
 
 .sort {

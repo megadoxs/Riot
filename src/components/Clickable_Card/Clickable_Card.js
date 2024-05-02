@@ -4,20 +4,20 @@ import Modal from '../Modal/Modal.js'
 
 import { useState, useEffect } from 'react';
 
-export default function Clickable_Card({prpchamp, prpimg, displayName}){
+export default function Clickable_Card({ element, prpimg, displayName, className, hasModal }){
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // maybe use a div so that <a> doesn't give me a warning
+    
     return(
-        <a onClick = {() => { if (!isModalOpen) setIsModalOpen(true); }}>
-            <img className = {styles.image} src={prpimg} alt={prpchamp.id} />
-            { displayName &&
-                <div className = {styles.name}>{prpchamp.name}</div>
+        <div className = {`${className}`} onClick = {() => { if ((typeof hasModal === 'undefined' || hasModal === true) && !isModalOpen) setIsModalOpen(true); }}>
+            <img className = {styles.image} src={prpimg} alt={element.id} />
+            {(typeof displayName === 'string') &&
+                <div className = {styles.name}>{displayName}</div>
             }
-            { isModalOpen &&
-                <Modal prptype = "abilities" prpchamp = {prpchamp} isModalOpen = {isModalOpen} setIsModalOpen = {setIsModalOpen}/>
+            {/*Will be remove from being a component since it is very specifict to the Card use*/}
+            {(typeof hasModal === 'undefined' || hasModal === true) && isModalOpen &&
+                <Modal prptype = "abilities" element = {element} isModalOpen = {isModalOpen} setIsModalOpen = {setIsModalOpen}/>
             }
-        </a>
+        </div>
     )
 }

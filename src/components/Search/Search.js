@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './Search.module.css';
 
-export default function Search({setSearchedChampions, champions, filters, sorters}){
+export default function Search({searchs, setSearchedChampions, champions, filters, sorters}){ // maybe eventually I will add the possibility to sorters to parse a custom sort function
 
     const [sortersBooleans, setSortersBooleans] = useState(Array.from({ length: sorters.length }, () => false));
     const [filtersBooleans, setFiltersBooleans] = useState(Array.from({ length: filters.length }, (_, i) => Array.from({ length: filters[i].options.length }, () => false)));
@@ -9,6 +9,19 @@ export default function Search({setSearchedChampions, champions, filters, sorter
     const [buttonsText, setButtonsText] = useState(Array.from({ length: filters.length }, () => "\u2B9E"))
     const [search, setSearch] = useState("");
     const [sortedChampions, setSortedChampions] = useState([]);
+
+    function defaultSort(a, b){   // W.I.P
+        const pathParts = searchs[0].split('.');
+        let aValue = a
+        let bValue = b
+
+        for (const part of pathParts) {
+            aValue = aValue[part];
+            bValue = bValue[part];
+        } 
+
+        return aValue.toLowerCase().localeCompare(bValue.toLowerCase())
+    }
 
     function sorterscheck(index){
         setSortersBooleans(sortersBooleans.map((boolean, i) => {
@@ -69,10 +82,11 @@ export default function Search({setSearchedChampions, champions, filters, sorter
                     });
                 }
             })
-        }); 
+        });
 
         setSortedChampions(tempChampions);
     }, [filtersBooleans, champions])
+
 
     useEffect(() => {
 
@@ -95,16 +109,34 @@ export default function Search({setSearchedChampions, champions, filters, sorter
 
                     if (aValue < bValue) return -1;
                     if (aValue > bValue) return 1;
-                    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                    return defaultSort(a, b);
                 });
             }
         });
 
         if (!sortersBooleans.some(boolean => boolean))
-            sortedChampions.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+            sortedChampions.sort((a, b) => defaultSort(a, b))
 
-        setSearchedChampions(sortedChampions.filter(champion => champion.name.toLowerCase().includes(search.toLowerCase()) || champion.id.toLowerCase().includes(search.toLowerCase())));
-    }, [sortedChampions, sortersBooleans, search])
+        setSearchedChampions(sortedChampions.filter(element => {
+            let includes = false
+            searchs: for (let i = 0; i < searchs.length; i++){
+                let pathParts = searchs[i].split('.');
+                let elementValue = element;
+
+                for (const part of pathParts) {
+                    if(elementValue[part] !== undefined)
+                        elementValue = elementValue[part];
+                    else 
+                        continue searchs;
+                }
+
+                if (includes === false)
+                    includes = elementValue.toLowerCase().includes(search.toLowerCase());
+                continue;
+            }
+            return includes
+        }));
+    }, [setSearchedChampions, sortedChampions, sortersBooleans, search])
 
     return (
         <div className = {styles.wrapper}>

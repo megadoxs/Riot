@@ -24,7 +24,6 @@
     overflow-y: scroll;
     overflow-x: hidden;
     width: 80%;
-    height: 100vh;
     background-color: gray;
     border: solid;
     box-sizing: border-box;
@@ -40,6 +39,7 @@
     flex-direction: row;
     z-index: 1;
     position: relative;
+    height: 100vh;
 }
 
 .search {
@@ -63,4 +63,22 @@
   
 .cards::-webkit-scrollbar-thumb:hover {
     background: #444;
+}
+
+.displayChampions {
+    background-color: white;
+    z-index: 1;
+    position: relative;
+}
+
+.displaySkins {
+    background-color: white;
+    z-index: 1;
+    position: relative;
+    float: right;
+}
+
+.title {
+    margin: 0;
+    padding: 20px 0;
 }
