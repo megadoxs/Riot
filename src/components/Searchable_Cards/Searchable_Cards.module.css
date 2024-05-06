@@ -1,0 +1,28 @@
+.champions {
+    display: flex;
+    flex-direction: row;
+    z-index: 1;
+    position: relative;
+    height: 100vh;
+}
+
+.search {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content:center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 80%;
+    background-color: gray;
+    border: solid;
+    box-sizing: border-box;
+    padding: 50px 0;
+}

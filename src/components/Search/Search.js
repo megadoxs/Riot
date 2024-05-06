@@ -10,7 +10,7 @@ export default function Search({searchs, setSearchedChampions, champions, filter
     const [search, setSearch] = useState("");
     const [sortedChampions, setSortedChampions] = useState([]);
 
-    function defaultSort(a, b){   // W.I.P
+    function defaultSort(a, b){
         const pathParts = searchs[0].split('.');
         let aValue = a
         let bValue = b
@@ -142,6 +142,7 @@ export default function Search({searchs, setSearchedChampions, champions, filter
         <div className = {styles.wrapper}>
             <input className = {styles.input} value = {search} onChange = {e => setSearch(e.target.value)} id = "Search_Bar" placeholder = "Search"></input>
             <div className = {styles.options}>
+                <h3>Sorters</h3>
                 <div>
                     {sorters.map((sorter, i) => (
                         <div key = {i} className = {styles.sort}>
@@ -150,6 +151,7 @@ export default function Search({searchs, setSearchedChampions, champions, filter
                         </div>
                     ))}
                 </div>
+                <h3>Filters</h3>
                 <div>
                     {filters.map((filter, i) => (
                         <div key = {i}>

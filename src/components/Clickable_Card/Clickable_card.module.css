@@ -1,4 +1,5 @@
 .name {
+    overflow-wrap: break-word;
     display: flex;
     color: white;
     font-size: 20px;
@@ -9,8 +10,16 @@
     text-transform: uppercase;
     font-style: italic;
     padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: -webkit-fill-available;
 }
 
 .image {
     display: block;
+}
+
+.wrapper {
+    width: min-content;
+    position: relative;
 }

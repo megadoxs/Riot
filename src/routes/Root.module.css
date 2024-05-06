@@ -66,19 +66,19 @@
 }
 
 .displayChampions {
-    background-color: white;
-    z-index: 1;
+    background-color: rgb(6, 28, 37);
     position: relative;
+    padding-bottom: 60px;
 }
 
 .displaySkins {
-    background-color: white;
-    z-index: 1;
+    background-color: rgb(10, 20, 35);
     position: relative;
-    float: right;
+    padding-bottom: 60px;
 }
 
 .title {
     margin: 0;
     padding: 20px 0;
+    color: white;
 }

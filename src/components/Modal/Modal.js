@@ -14,7 +14,7 @@ export default function Clickable_Card({prptype, element, isModalOpen, setIsModa
     }, [])
 
     return(
-        <div className = {styles.wrapper} onClick={(e) => { if (e.target === e.currentTarget && isModalOpen) setIsModalOpen(false) }}>
+        <div className = {styles.wrapper} onClick={(e) => { if (e.target === e.currentTarget && isModalOpen) setIsModalOpen(false)}}>
                 <div className = {styles.content}>
                     <span className = {styles.close} onClick={() => setIsModalOpen(false)} >&times;</span>
                     { prptype === "abilities" &&
