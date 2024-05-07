@@ -21,5 +21,6 @@
 
 .wrapper {
     width: min-content;
+    height: min-content;
     position: relative;
 }

@@ -15,7 +15,7 @@ export default function Searchable_Cards({ cards, displayName, searchs, filters,
                 <Search searchs = {searchs} setSearchedChampions = {setSearch} champions = {cards} filters = {filters} sorters = {sorters}/>
             </div>
             <div className = {styles.cards}>
-                {search.map((card, i) =>
+                {search.map((card, i) => 
                     <Clickable_Card key = {i} element = {card} displayName = {eval('`' + displayName + '`')} prpimg = {eval('`' + img + '`')}/>
                 )}
             </div>

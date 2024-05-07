@@ -18,6 +18,7 @@
     height: 100px;
     width: 100px;
     border-radius: 50%;
+    z-index: 1;
 }
 .displayButtonL {
     left: 0;
