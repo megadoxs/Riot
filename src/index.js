@@ -11,17 +11,22 @@ import Root from './routes/Root.js';
 import Valorant from './routes/Valorant.js';
 import ErrorPage from './routes/Error-Page.js';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Root/>,
+      errorElement: <ErrorPage/>
+    },
+    {
+      path: "/Valorant",
+      element: <Valorant/>
+    }
+  ],
   {
-    path: "/"
-    ,element: <Root/>
-    ,errorElement: <ErrorPage/>
-  },
-  {
-    path: "/Valorant"
-    ,element: <Valorant/>
+    basename: "/Riot"
   }
-]);
+);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
