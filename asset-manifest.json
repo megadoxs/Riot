@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/Riot/static/css/main.aff692cd.css",
+    "main.js": "/Riot/static/js/main.5299de6a.js",
+    "static/js/453.df5364dd.chunk.js": "/Riot/static/js/453.df5364dd.chunk.js",
+    "static/media/Valorant_Banner.png": "/Riot/static/media/Valorant_Banner.872df8c9813ad03ab253.png",
+    "static/media/League_Banner.png": "/Riot/static/media/League_Banner.352dcdf4a70b74b99ae3.png",
+    "index.html": "/Riot/index.html",
+    "main.aff692cd.css.map": "/Riot/static/css/main.aff692cd.css.map",
+    "main.5299de6a.js.map": "/Riot/static/js/main.5299de6a.js.map",
+    "453.df5364dd.chunk.js.map": "/Riot/static/js/453.df5364dd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aff692cd.css",
+    "static/js/main.5299de6a.js"
+  ]
+}
